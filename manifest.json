@@ -1,0 +1,49 @@
+{
+  "name": "Getting Started Example",
+  "description": "Build an Extension!",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "permissions": [
+    "storage",
+    "webRequest",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "notifications",
+    "cookies",
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset-1",
+        "enabled": true,
+        "path": "ruleset-1.json"
+      }
+    ]
+  },
+  "action": {
+    "default_popup": "dist/packages/docs/popup.html",
+    "default_icon": {
+      "16": "dist/static/images/get_started16.png",
+      "32": "dist/static/images/get_started32.png",
+      "48": "dist/static/images/get_started48.png",
+      "128": "dist/static/images/get_started128.png"
+    }
+  },
+  "icons": {
+    "16": "dist/static/images/get_started16.png",
+    "32": "dist/static/images/get_started32.png",
+    "48": "dist/static/images/get_started48.png",
+    "128": "dist/static/images/get_started128.png"
+  }
+}

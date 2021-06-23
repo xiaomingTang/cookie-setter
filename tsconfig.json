@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "outDir": "dist/scripts",
+    "module": "ESNext",
+    "target": "ES2017",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "paths": {
+      "@Src/*": ["src/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "src/@types"
+    ],
+    "plugins": [
+      {
+        "transform": "ts-transform-paths"
+      }
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/service-worker.ts"
+  ]
+}
