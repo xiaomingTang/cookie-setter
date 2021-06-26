@@ -4,6 +4,18 @@ import { isSubDomainOf, isValidDomain } from "@Src/utils"
 export const STRATEGY_LIST_STORAGE_AREA_NAME: chrome.storage.AreaName = "local"
 export const STRATEGY_LIST_STORAGE_KEY = "STRATEGY_LIST_STORAGE_KEY"
 
+function runOnlyTimes(times: number) {
+  let excutedTimes = 0
+  return (callback: Function) => {
+    if (excutedTimes < times) {
+      excutedTimes += 1
+      callback()
+    }
+  }
+}
+
+const runOnce = runOnlyTimes(1)
+
 export interface CookieStrategy {
   enabled: boolean;
   domain: string;
@@ -33,24 +45,23 @@ export async function setCookieSameSite(
   ) {
     return
   }
-  console.log({
+  const config = {
+    ...cookie,
     name: cookie.name,
     value: cookie.value,
-    domain: cookie.domain,
+    domain: cookie.domain.startsWith(".") ? cookie.domain.slice(1) : cookie.domain,
     expirationDate: cookie.expirationDate,
     storeId: cookie.storeId,
     url: "https://*.codemao.cn/",
     ...overwrite,
-  })
-  // await chrome.cookies.set({
-  //   name: cookie.name,
-  //   value: cookie.value,
-  //   domain: cookie.domain,
-  //   expirationDate: cookie.expirationDate,
-  //   storeId: cookie.storeId,
-  //   url: "https://*.codemao.cn/",
-  //   ...overwrite,
-  // })
+  }
+  try {
+    await chrome.cookies.set(config)
+  } catch (err) {
+    runOnce(() => {
+      console.error(cookie, config)
+    })
+  }
 }
 
 export async function setCookieByStrategy(
